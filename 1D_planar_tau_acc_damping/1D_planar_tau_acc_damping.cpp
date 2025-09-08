@@ -77,12 +77,15 @@ int main(){
 
     cout << "diffusion coefficient: " << Dz_i[0] << ", " << Dz_i[3000] << ", " << Dz_i[6000] << endl;
 
-    // timescale ratio at 1 PeV
+    // timescale ratio
 
-    double tau_sa = 9.0*Dz_i[6000]/pow(vA,2.0);
-    double tau_esc = pow(z0,2.0)/Dz_i[6000];
+    double tau_sa[nj], tau_esc[nj];
+    for(j=0; j<nj; ++j){
+        tau_sa[j] = 9.0*Dz_i[j]/pow(vA,2.0);
+        tau_esc[j] = pow(z0,2.0)/Dz_i[j];
+    }
 
-    cout << "timescale ratio: " << tau_sa/tau_esc << endl;
+    cout << "timescale ratio: " << tau_sa[6000]/tau_esc[6000] << endl;
 
     // calculate the spectrum at the shock
 
@@ -187,6 +190,16 @@ int main(){
     fout.open("Dz_f.csv");
     for(j=0; j<nj; ++j)
         fout << Dz_f[j] << endl;
+    fout.close();
+
+    fout.open("tau_sa.csv");
+    for(j=0; j<nj; ++j)
+        fout << tau_sa[j] << endl;
+    fout.close();
+
+    fout.open("tau_esc.csv");
+    for(j=0; j<nj; ++j)
+        fout << tau_esc[j] << endl;
     fout.close();
 
     fout.open("f0_1.csv");
